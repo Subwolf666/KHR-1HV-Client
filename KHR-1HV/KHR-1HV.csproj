@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A9A07748-0ADC-4202-971D-904249E51679}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KHR_1HV</RootNamespace>
+    <AssemblyName>KHR-1HV</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Roboard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Roboard\Roboard\obj\Debug\Roboard.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="KHR-1HV_MotionStopPause.cs" />
+    <Compile Include="KHR-1HV_ToolForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KHR-1HV_ToolForm.Designer.cs">
+      <DependentUpon>KHR-1HV_ToolForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KHR-1HV_DataTable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KHR-1HV_DataTable.Designer.cs">
+      <DependentUpon>KHR-1HV_DataTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KHR-1HV_IniFile.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IniFile.cs" />
+    <Compile Include="IniSection.cs" />
+    <Compile Include="KHR-1HV_DataDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KHR-1HV_DataDialog.Designer.cs">
+      <DependentUpon>KHR-1HV_DataDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KHR-1HV_MotionFile.cs" />
+    <Compile Include="KHR-1HV_NameChannels.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KHR-1HV_Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KHR-1HV_Main.Designer.cs">
+      <DependentUpon>KHR-1HV_Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KHR-1HV_Information.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KHR-1HV_Information.Designer.cs">
+      <DependentUpon>KHR-1HV_Information.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KHR-1HV_NameChannels.Designer.cs">
+      <DependentUpon>KHR-1HV_NameChannels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KHR-1HV_Options.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KHR-1HV_Options.Designer.cs">
+      <DependentUpon>KHR-1HV_Options.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KHR-1HV_Receiver.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KHR-1HV_Receiver.Designer.cs">
+      <DependentUpon>KHR-1HV_Receiver.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KHR-1HV_Sensors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KHR-1HV_Sensors.Designer.cs">
+      <DependentUpon>KHR-1HV_Sensors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KHR-1HV_Lib.cs" />
+    <Compile Include="KHR-1HV_Trim.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KHR-1HV_Trim.Designer.cs">
+      <DependentUpon>KHR-1HV_Trim.cs</DependentUpon>
+    </Compile>
+    <Compile Include="motionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="motionForm.Designer.cs">
+      <DependentUpon>motionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KHR-1HV_Position.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KHR-1HV_Position.Designer.cs">
+      <DependentUpon>KHR-1HV_Position.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkFile.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="KHR-1HV_ToolForm.resx">
+      <DependentUpon>KHR-1HV_ToolForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KHR-1HV_DataDialog.resx">
+      <DependentUpon>KHR-1HV_DataDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KHR-1HV_DataTable.resx">
+      <DependentUpon>KHR-1HV_DataTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KHR-1HV_Main.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>KHR-1HV_Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KHR-1HV_Information.resx">
+      <DependentUpon>KHR-1HV_Information.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KHR-1HV_NameChannels.resx">
+      <DependentUpon>KHR-1HV_NameChannels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KHR-1HV_Options.resx">
+      <DependentUpon>KHR-1HV_Options.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KHR-1HV_Receiver.resx">
+      <DependentUpon>KHR-1HV_Receiver.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KHR-1HV_Sensors.resx">
+      <DependentUpon>KHR-1HV_Sensors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KHR-1HV_Trim.resx">
+      <DependentUpon>KHR-1HV_Trim.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KHR-1HV_Position.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>KHR-1HV_Position.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KHR-1HV_Properties.resx">
+      <DependentUpon>KHR-1HV_Properties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KHR-1HV_Set.resx">
+      <DependentUpon>KHR-1HV_Set.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="KHR-1HV_Properties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KHR-1HV_Properties.Designer.cs">
+      <DependentUpon>KHR-1HV_Properties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RobotTrim.cs" />
+    <Compile Include="RoundedRectangles.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="KHR-1HV_Set.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KHR-1HV_Set.Designer.cs">
+      <DependentUpon>KHR-1HV_Set.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\KHR-1HV.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\white.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\black.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\standard.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gray.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Dark gray.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brown.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\red.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\purple.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blue.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Yellow.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Green.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Aqua.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\etc.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\khr-1hv small.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\khr-1hv small.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AnalogSlider\AnalogSlider.csproj">
+      <Project>{30334DAF-A134-4483-90E6-65A48376BD08}</Project>
+      <Name>AnalogSlider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HorizontalSlider\HorizontalSlider.csproj">
+      <Project>{AE2861EA-B1DC-4992-8B99-7CC31902772D}</Project>
+      <Name>HorizontalSlider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LabeledComboBox\LabeledComboBox.csproj">
+      <Project>{57A68C7D-E730-4295-9CDB-9C5A1FAD905C}</Project>
+      <Name>LabeledComboBox</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LabeledTextBox\LabeledTextBox.csproj">
+      <Project>{D6B9D0EE-6048-40B5-A8EB-C544C6015046}</Project>
+      <Name>LabeledTextBox</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixComboBox\MixComboBox.csproj">
+      <Project>{E1CE5BF1-B32A-4997-AF2C-86204AFDC5D1}</Project>
+      <Name>MixComboBox</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PosCommandMenu\PosCommandMenu.csproj">
+      <Project>{4422620F-F1B4-4A2C-8CB3-AEBD3A2D0111}</Project>
+      <Name>PosCommandMenu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ToolStripCheckBoxControl\ToolStripCheckBoxControl.csproj">
+      <Project>{5D26D5E0-D21A-4CE9-8AC8-81A80B14D2AC}</Project>
+      <Name>ToolStripCheckBoxControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TrimCommandMenu\TrimCommandMenu.csproj">
+      <Project>{9EEB6823-416D-4928-BAD9-F8FB1CC1E989}</Project>
+      <Name>TrimCommandMenu</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Navy.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Teal.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Lime.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Olive.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\CommandMenu\Declink.bmp" />
+    <Content Include="Resources\CommandMenu\HomePosition.bmp" />
+    <Content Include="Resources\CommandMenu\inclink.bmp" />
+    <Content Include="Resources\CommandMenu\Read.bmp" />
+    <Content Include="Resources\CommandMenu\Sleep.bmp" />
+    <Content Include="Resources\CommandMenu\Snapshot.bmp" />
+    <Content Include="Resources\CommandMenu\TrimPosition.bmp" />
+    <Content Include="Resources\CommandMenu\Write.bmp" />
+    <Content Include="Resources\Icon\KHR-1HV.ico" />
+    <Content Include="Resources\Misc\1KHR-1HV Logo.bmp" />
+    <Content Include="Resources\Misc\KHR-1HV Logo.bmp" />
+    <Content Include="Resources\Misc\KHR-1HV Logo.jpg" />
+    <Content Include="Resources\Toolstrip bmp\BranchWiring.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Compare.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Compile.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Delete.bmp" />
+    <Content Include="Resources\Toolstrip bmp\FlowWiring.bmp" />
+    <Content Include="Resources\Toolstrip bmp\HomePosition.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Mix.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Pauze.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Play.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Position.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Read.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Receiver.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Analog.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Exit.bmp" />
+    <Content Include="Resources\Toolstrip bmp\ICS.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Information.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Load.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Option.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Properties.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Save.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Select.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Set.bmp" />
+    <Content Include="Resources\Toolstrip bmp\StartFlag.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Stop.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Table.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Trim.bmp" />
+    <Content Include="Resources\Toolstrip bmp\TrimPosition.bmp" />
+    <Content Include="Resources\Toolstrip bmp\Write.bmp" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
