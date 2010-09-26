@@ -32,27 +32,27 @@ namespace KHR_1HV
         private void KHR_1HV_DataDialog_FormClosing(object sender, FormClosingEventArgs e)
         {
             Controller.Stop();
-            Controller.ReceiverChange -= new ReceiverChangeEventHandler(Controller_ReceiverChange);
+            Controller.XBox360ControllerChange -= new XBox360ControllerChangeEventHandler(Controller_ReceiverChange);
         }
 
-        private delegate void controllerTextDelegate(string[] Receiver);
-        private void controllerText(string[] Receiver)
+        private delegate void controllerTextDelegate(string[] XBox360Controller);
+        private void controllerText(string[] XBox360Controller)
         {
             if (this.tbRemoteControlCode.InvokeRequired)
             {
-                this.tbRemoteControlCode.BeginInvoke(new controllerTextDelegate(controllerText), new object[] { Receiver });
+                this.tbRemoteControlCode.BeginInvoke(new controllerTextDelegate(controllerText), new object[] { XBox360Controller });
             }
             else
             {
-                this.tbRemoteControlCode.Text = Receiver[0];
+                this.tbRemoteControlCode.Text = XBox360Controller[0];
             }
         }
 
         string[] previousReceiver = new string[8];
         string[] currentReceiver = new string[8];
-        void Controller_ReceiverChange(object sender, ReceiverChangeEventArgs e)
+        void Controller_ReceiverChange(object sender, XBox360ControllerChangeEventArgs e)
         {
-            currentReceiver = e.Receiver;
+            currentReceiver = e.XBox360Controller;
             if (currentReceiver[0] == "65535")
                 controllerText(previousReceiver);
             else
@@ -69,12 +69,12 @@ namespace KHR_1HV
             {
                 btnCapture.Text = "Capturing";
                 Controller.Start();
-                Controller.ReceiverChange += new ReceiverChangeEventHandler(Controller_ReceiverChange);
+                Controller.XBox360ControllerChange += new XBox360ControllerChangeEventHandler(Controller_ReceiverChange);
             }
             else
             {
                 Controller.Stop();
-                Controller.ReceiverChange -= new ReceiverChangeEventHandler(Controller_ReceiverChange);
+                Controller.XBox360ControllerChange -= new XBox360ControllerChangeEventHandler(Controller_ReceiverChange);
                 btnCapture.Text = "Capture";
                 _remoteControllerCode = tbRemoteControlCode.Text;
             }
@@ -87,14 +87,14 @@ namespace KHR_1HV
                 _remoteControllerCode = "65535";
             else
                 _remoteControllerCode = tbRemoteControlCode.Text;
-            Controller.ReceiverChange -= new ReceiverChangeEventHandler(Controller_ReceiverChange);
+            Controller.XBox360ControllerChange -= new XBox360ControllerChangeEventHandler(Controller_ReceiverChange);
             Controller.Stop();
             this.DialogResult = DialogResult.OK;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            Controller.ReceiverChange -= new ReceiverChangeEventHandler(Controller_ReceiverChange);
+            Controller.XBox360ControllerChange -= new XBox360ControllerChangeEventHandler(Controller_ReceiverChange);
             Controller.Stop();
             this.DialogResult = DialogResult.Cancel;
         }

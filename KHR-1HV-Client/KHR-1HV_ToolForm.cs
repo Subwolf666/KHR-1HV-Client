@@ -30,7 +30,7 @@ namespace KHR_1HV
 
             for (int i = 0; i < StaticUtilities.numberOfMotions; i++)
             {
-                comboBox1.Items.Add(string.Format("{0}   {1}", Roboard.MotionDataTable.motionDataTable[i, 0], Roboard.MotionDataTable.motionDataTable[i, 3]));
+                comboBox1.Items.Add(string.Format("{0}   {1}", Roboard.DataTable.motionDataTable[i, 0], Roboard.DataTable.motionDataTable[i, 3]));
             }
             if (selectedMotionIndex >= 0)
                 comboBox1.SelectedIndex = selectedMotionIndex;
@@ -54,10 +54,10 @@ namespace KHR_1HV
                             deleteMotion.SelectedMotionIndex = this.selectedMotionIndex;
                             if (deleteMotion.Delete())
                             {
-                                Roboard.MotionDataTable.motionDataTable[selectedMotionIndex, 1] = string.Empty;  // name
-                                Roboard.MotionDataTable.motionDataTable[selectedMotionIndex, 2] = string.Format("{0}", 0); // count
-                                Roboard.MotionDataTable.motionDataTable[selectedMotionIndex, 3] = string.Format("--/--/---- --:--"); // date
-                                Roboard.MotionDataTable.motionDataTable[selectedMotionIndex, 4] = string.Format("{0}", 65535); // control
+                                Roboard.DataTable.motionDataTable[selectedMotionIndex, 1] = string.Empty;  // name
+                                Roboard.DataTable.motionDataTable[selectedMotionIndex, 2] = string.Format("{0}", 0); // count
+                                Roboard.DataTable.motionDataTable[selectedMotionIndex, 3] = string.Format("--/--/---- --:--"); // date
+                                Roboard.DataTable.motionDataTable[selectedMotionIndex, 4] = string.Format("{0}", 65535); // control
                                 this.DialogResult = DialogResult.OK;
                             }
                             else
@@ -94,10 +94,10 @@ namespace KHR_1HV
                             string currentDate = DateTime.Now.ToString("dd/MM/yyyy");
                             string currentTime = DateTime.Now.ToString("t");
 
-                            Roboard.MotionDataTable.motionDataTable[selectedMotionIndex, 1] = motionData[Roboard.StaticUtilities.SectionGraphicalEdit][Roboard.StaticUtilities.GraphicalEditName];
-                            Roboard.MotionDataTable.motionDataTable[selectedMotionIndex, 2] = string.Format("{0}", 0);
-                            Roboard.MotionDataTable.motionDataTable[selectedMotionIndex, 3] = string.Format("{0} {1}", currentDate, currentTime);
-                            Roboard.MotionDataTable.motionDataTable[selectedMotionIndex, 4] = motionData[Roboard.StaticUtilities.SectionGraphicalEdit][Roboard.StaticUtilities.GraphicalEditCtrl];
+                            Roboard.DataTable.motionDataTable[selectedMotionIndex, 1] = motionData[Roboard.StaticUtilities.SectionGraphicalEdit][Roboard.StaticUtilities.GraphicalEditName];
+                            Roboard.DataTable.motionDataTable[selectedMotionIndex, 2] = string.Format("{0}", 0);
+                            Roboard.DataTable.motionDataTable[selectedMotionIndex, 3] = string.Format("{0} {1}", currentDate, currentTime);
+                            Roboard.DataTable.motionDataTable[selectedMotionIndex, 4] = motionData[Roboard.StaticUtilities.SectionGraphicalEdit][Roboard.StaticUtilities.GraphicalEditCtrl];
                             this.DialogResult = DialogResult.OK;
                             break;
                         default:

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Roboard;
@@ -23,7 +22,7 @@ namespace KHR_1HV
 
         private void KHR_1HV_DataTable_Load(object sender, EventArgs e)
         {
-            Roboard.MotionDataTable.Init();
+            //Roboard.DataTable.Start();
             watchDogTimer = new TimeOut();
             for (int i = 0; i < StaticUtilities.numberOfMotions; i++)
             {
@@ -31,7 +30,7 @@ namespace KHR_1HV
                 ListViewItem itm;
                 for (int j = 0; j < StaticUtilities.numberOfDataTableItems; j++)
                 {
-                    str[j] = Roboard.MotionDataTable.motionDataTable[i, j];
+                    str[j] = Roboard.DataTable.motionDataTable[i, j];
                 }
                 itm = new ListViewItem(str);
                 this.lvDataTable.Items.Add(itm);
@@ -51,7 +50,7 @@ namespace KHR_1HV
         //
         private void tsDelete_Click(object sender, EventArgs e)
         {
-            if (!Roboard.MotionDataTable.Done)
+            if (!Roboard.DataTable.Done)
                 return;
             KHR_1HV_ToolForm myDelete = new KHR_1HV_ToolForm();
             myDelete.Text = "Delete";
@@ -67,10 +66,10 @@ namespace KHR_1HV
         //
         private bool readDataTable()
         {
-            if (!Roboard.MotionDataTable.readMotionDataTable())
+            if (!Roboard.DataTable.readMotionDataTable())
                 return false;
             watchDogTimer.Start(10000);
-            while ((!Roboard.MotionDataTable.Done) && (!watchDogTimer.Done)) ;
+            while ((!Roboard.DataTable.Done) && (!watchDogTimer.Done)) ;
             this.constructDataTable();
             this.Cursor = Cursors.Default;
             return true;
@@ -93,7 +92,7 @@ namespace KHR_1HV
                 string[] str = new string[StaticUtilities.numberOfDataTableItems];
                 ListViewItem itm;
                 for (int j = 0; j < StaticUtilities.numberOfDataTableItems; j++)
-                    str[j] = Roboard.MotionDataTable.motionDataTable[i, j];
+                    str[j] = Roboard.DataTable.motionDataTable[i, j];
                 itm = new ListViewItem(str);
                 this.lvDataTable.Items.Add(itm);
             }
@@ -108,7 +107,7 @@ namespace KHR_1HV
 
         private void KHR_1HV_DataTable_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Roboard.MotionDataTable.Close();
+            Roboard.DataTable.Stop();
         }
     }  
 }

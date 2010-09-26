@@ -55,10 +55,6 @@
   <ItemGroup>
     <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Roboard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Roboard\Roboard\obj\Debug\Roboard.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -118,11 +114,11 @@
     <Compile Include="KHR-1HV_Options.Designer.cs">
       <DependentUpon>KHR-1HV_Options.cs</DependentUpon>
     </Compile>
-    <Compile Include="KHR-1HV_Receiver.cs">
+    <Compile Include="KHR-1HV_XBox360Controller.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="KHR-1HV_Receiver.Designer.cs">
-      <DependentUpon>KHR-1HV_Receiver.cs</DependentUpon>
+    <Compile Include="KHR-1HV_XBox360Controller.Designer.cs">
+      <DependentUpon>KHR-1HV_XBox360Controller.cs</DependentUpon>
     </Compile>
     <Compile Include="KHR-1HV_Sensors.cs">
       <SubType>Form</SubType>
@@ -174,8 +170,8 @@
     <EmbeddedResource Include="KHR-1HV_Options.resx">
       <DependentUpon>KHR-1HV_Options.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="KHR-1HV_Receiver.resx">
-      <DependentUpon>KHR-1HV_Receiver.cs</DependentUpon>
+    <EmbeddedResource Include="KHR-1HV_XBox360Controller.resx">
+      <DependentUpon>KHR-1HV_XBox360Controller.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="KHR-1HV_Sensors.resx">
       <DependentUpon>KHR-1HV_Sensors.cs</DependentUpon>
@@ -295,6 +291,10 @@
     <None Include="Resources\khr-1hv small.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Roboard-Client\Roboard\Roboard.csproj">
+      <Project>{CC85F252-ED2F-4986-ADEE-94CAA4346E59}</Project>
+      <Name>Roboard</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AnalogSlider\AnalogSlider.csproj">
       <Project>{30334DAF-A134-4483-90E6-65A48376BD08}</Project>
       <Name>AnalogSlider</Name>

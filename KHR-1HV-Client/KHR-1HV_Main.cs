@@ -372,8 +372,8 @@ namespace KHR_1HV
                 case eToolStripMenu.RECEIVER:
                     if (RoboardConnected)
                     {
-                        KHR_1HV_Receiver receiverForm = new KHR_1HV_Receiver();
-                        receiverForm.ShowDialog();
+                        KHR_1HV_XBox360Controller myXBox360 = new KHR_1HV_XBox360Controller();
+                        myXBox360.ShowDialog();
                     }
                     break;
                 case eToolStripMenu.TABLE:

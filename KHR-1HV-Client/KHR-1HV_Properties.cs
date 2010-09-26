@@ -179,8 +179,8 @@ namespace KHR_1HV
                 tbGridY.Text = _tbGridY.ToString();
 
             if (cbIcon.Checked)
-                if (!Roboard.FileAssociation.IsAssociated(".RMF"))
-                    Roboard.FileAssociation.Associate(".RMF", "Roboard Motion File", "ext File", "KHR-1HV.ico", "KHR-1HV.exe");
+                //if (!Roboard.FileAssociation.IsAssociated(".RMF"))
+                //    Roboard.FileAssociation.Associate(".RMF", "Roboard Motion File", "ext File", "KHR-1HV.ico", "KHR-1HV.exe");
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

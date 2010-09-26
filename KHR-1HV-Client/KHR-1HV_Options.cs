@@ -26,10 +26,10 @@ namespace KHR_1HV
             // Create or copy the motion data table for this class
             for (int i = 0; i < StaticUtilities.numberOfMotions; i++)
             {
-                if (Roboard.MotionDataTable.Done)
+                if (Roboard.DataTable.Done)
                 {
-                    comboBox1.Items.Add(string.Format("{0}   {1}", Roboard.MotionDataTable.motionDataTable[i, 0], Roboard.MotionDataTable.motionDataTable[i, 3]));
-                    comboBox2.Items.Add(string.Format("{0}   {1}", Roboard.MotionDataTable.motionDataTable[i, 0], Roboard.MotionDataTable.motionDataTable[i, 3]));
+                    comboBox1.Items.Add(string.Format("{0}   {1}", Roboard.DataTable.motionDataTable[i, 0], Roboard.DataTable.motionDataTable[i, 3]));
+                    comboBox2.Items.Add(string.Format("{0}   {1}", Roboard.DataTable.motionDataTable[i, 0], Roboard.DataTable.motionDataTable[i, 3]));
                 }
                 else
                 {

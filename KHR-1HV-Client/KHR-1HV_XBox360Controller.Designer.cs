@@ -1,6 +1,6 @@
 ﻿namespace KHR_1HV
 {
-    partial class KHR_1HV_Receiver
+    partial class KHR_1HV_XBox360Controller
     {
         /// <summary>
         /// Required designer variable.
@@ -41,9 +41,9 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.RightTrigger = new AnalogSlider.AnalogSliderControl();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.lblConnected = new System.Windows.Forms.Label();
             this.tbInputButton = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.lblConnected = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -203,6 +203,16 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Input Button";
             // 
+            // lblConnected
+            // 
+            this.lblConnected.AutoSize = true;
+            this.lblConnected.ForeColor = System.Drawing.Color.Red;
+            this.lblConnected.Location = new System.Drawing.Point(118, 37);
+            this.lblConnected.Name = "lblConnected";
+            this.lblConnected.Size = new System.Drawing.Size(79, 13);
+            this.lblConnected.TabIndex = 5;
+            this.lblConnected.Text = "Not Connected";
+            // 
             // tbInputButton
             // 
             this.tbInputButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -223,17 +233,7 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Ref";
             // 
-            // lblConnected
-            // 
-            this.lblConnected.AutoSize = true;
-            this.lblConnected.ForeColor = System.Drawing.Color.Red;
-            this.lblConnected.Location = new System.Drawing.Point(118, 37);
-            this.lblConnected.Name = "lblConnected";
-            this.lblConnected.Size = new System.Drawing.Size(79, 13);
-            this.lblConnected.TabIndex = 5;
-            this.lblConnected.Text = "Not Connected";
-            // 
-            // KHR_1HV_Receiver
+            // KHR_1HV_XBox360Controller
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -246,11 +246,11 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Name = "KHR_1HV_Receiver";
+            this.Name = "KHR_1HV_XBox360Controller";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "KHR_1HV_Receiver";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.KHR_1HV_Receiver_FormClosing);
-            this.Load += new System.EventHandler(this.KHR_1HV_Receiver_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.KHR_1HV_XBox360Controller_FormClosing);
+            this.Load += new System.EventHandler(this.KHR_1HV_XBox360Controller_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
