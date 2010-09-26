@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using Roboard;
-using Ini;
 
 public enum eToolStripMenu : int
 {
@@ -431,7 +430,7 @@ namespace KHR_1HV
                 case eToolStripMenu.WRITE:
                     if ((RoboardConnected) && (MotionDataTableLoaded))
                     {
-                        KHR_1HV_ToolForm myWrite = new KHR_1HV_ToolForm();
+                        KHR_1HV_ToolMenu myWrite = new KHR_1HV_ToolMenu();
                         myWrite.Text = "Write";
                         myWrite.Label = "Select Roboard memory location";
                         myWrite.Motion = currentMotion;
@@ -441,7 +440,7 @@ namespace KHR_1HV
                 case eToolStripMenu.READ:
                     if ((RoboardConnected) && (MotionDataTableLoaded))
                     {
-                        KHR_1HV_ToolForm myRead = new KHR_1HV_ToolForm();
+                        KHR_1HV_ToolMenu myRead = new KHR_1HV_ToolMenu();
                         myRead.Text = "Read";
                         myRead.Label = "Select Roboard memory location";
                         myRead.ShowDialog();
@@ -457,7 +456,7 @@ namespace KHR_1HV
                 case eToolStripMenu.DELETE:
                     if ((RoboardConnected) && (MotionDataTableLoaded))
                     {
-                        KHR_1HV_ToolForm myDelete = new KHR_1HV_ToolForm();
+                        KHR_1HV_ToolMenu myDelete = new KHR_1HV_ToolMenu();
                         myDelete.Text = "Delete";
                         myDelete.Label = "Select the motion or scenario to be deleted";
                         myDelete.ShowDialog();
@@ -466,7 +465,7 @@ namespace KHR_1HV
                 case eToolStripMenu.STOP:
                     if ((RoboardConnected) && (playingMotion))
                     {
-                        NetworkFile stopMotion = new NetworkFile();
+                        ToolMenu stopMotion = new ToolMenu();
                         stopMotion.Stop();
                     }
                     // in welke class moet stop en pause zitten
@@ -474,14 +473,14 @@ namespace KHR_1HV
                 case eToolStripMenu.PAUSE:
                     if ((RoboardConnected) && (playingMotion))
                     {
-                        NetworkFile pauseMotion = new NetworkFile();
+                        ToolMenu pauseMotion = new ToolMenu();
                         pauseMotion.Pause();
                     }
                     break;
                 case eToolStripMenu.PLAY:
                     if (RoboardConnected)
                     {
-                        KHR_1HV_ToolForm myPlay = new KHR_1HV_ToolForm();
+                        KHR_1HV_ToolMenu myPlay = new KHR_1HV_ToolMenu();
                         myPlay.Text = "Play";
                         myPlay.Label = "Select the motion or scenario to play";
                         myPlay.SelectedMotionIndex = 0;

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using Roboard;
 using Roboard.Events;
 using HorizontalSlider;
-using Ini;
+//using Ini;
 
 namespace KHR_1HV
 {

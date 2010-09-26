@@ -66,11 +66,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="KHR-1HV_MotionStopPause.cs" />
-    <Compile Include="KHR-1HV_ToolForm.cs">
+    <Compile Include="KHR-1HV_ToolMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="KHR-1HV_ToolForm.Designer.cs">
-      <DependentUpon>KHR-1HV_ToolForm.cs</DependentUpon>
+    <Compile Include="KHR-1HV_ToolMenu.Designer.cs">
+      <DependentUpon>KHR-1HV_ToolMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="KHR-1HV_DataTable.cs">
       <SubType>Form</SubType>
@@ -81,8 +81,6 @@
     <Compile Include="KHR-1HV_IniFile.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="IniFile.cs" />
-    <Compile Include="IniSection.cs" />
     <Compile Include="KHR-1HV_DataDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,23 +131,16 @@
     <Compile Include="KHR-1HV_Trim.Designer.cs">
       <DependentUpon>KHR-1HV_Trim.cs</DependentUpon>
     </Compile>
-    <Compile Include="motionForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="motionForm.Designer.cs">
-      <DependentUpon>motionForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="KHR-1HV_Position.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="KHR-1HV_Position.Designer.cs">
       <DependentUpon>KHR-1HV_Position.cs</DependentUpon>
     </Compile>
-    <Compile Include="NetworkFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="KHR-1HV_ToolForm.resx">
-      <DependentUpon>KHR-1HV_ToolForm.cs</DependentUpon>
+    <EmbeddedResource Include="KHR-1HV_ToolMenu.resx">
+      <DependentUpon>KHR-1HV_ToolMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="KHR-1HV_DataDialog.resx">
       <DependentUpon>KHR-1HV_DataDialog.cs</DependentUpon>
@@ -214,7 +205,6 @@
     <Compile Include="KHR-1HV_Properties.Designer.cs">
       <DependentUpon>KHR-1HV_Properties.cs</DependentUpon>
     </Compile>
-    <Compile Include="RobotTrim.cs" />
     <Compile Include="RoundedRectangles.cs">
       <SubType>UserControl</SubType>
     </Compile>

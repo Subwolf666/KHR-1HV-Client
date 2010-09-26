@@ -22,7 +22,6 @@ namespace KHR_1HV
 
         private void KHR_1HV_DataTable_Load(object sender, EventArgs e)
         {
-            //Roboard.DataTable.Start();
             watchDogTimer = new TimeOut();
             for (int i = 0; i < StaticUtilities.numberOfMotions; i++)
             {
@@ -46,13 +45,26 @@ namespace KHR_1HV
 
         }
 
+        //
+        // Needed for the cursor function.
+        private bool readDataTable()
+        {
+            if (!Roboard.DataTable.Start())
+                return false;
+            watchDogTimer.Start(10000);
+            while ((!Roboard.DataTable.Done) && (!watchDogTimer.Done)) ;
+            this.constructDataTable();
+            this.Cursor = Cursors.Default;
+            return true;
+        }
+
         // Delete a motion
         //
         private void tsDelete_Click(object sender, EventArgs e)
         {
             if (!Roboard.DataTable.Done)
                 return;
-            KHR_1HV_ToolForm myDelete = new KHR_1HV_ToolForm();
+            KHR_1HV_ToolMenu myDelete = new KHR_1HV_ToolMenu();
             myDelete.Text = "Delete";
             myDelete.Label = "Select the motion or scenario to be deleted";
             myDelete.ShowDialog();
@@ -60,19 +72,6 @@ namespace KHR_1HV
             //
             if (myDelete.DialogResult == DialogResult.OK)
                 this.constructDataTable();
-        }
-
-        //
-        //
-        private bool readDataTable()
-        {
-            if (!Roboard.DataTable.readMotionDataTable())
-                return false;
-            watchDogTimer.Start(10000);
-            while ((!Roboard.DataTable.Done) && (!watchDogTimer.Done)) ;
-            this.constructDataTable();
-            this.Cursor = Cursors.Default;
-            return true;
         }
 
         // Method

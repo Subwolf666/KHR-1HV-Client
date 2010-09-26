@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using HorizontalSlider;
-using Ini;
+//using Ini;
 using Roboard;
 
 namespace KHR_1HV

@@ -1,4 +1,7 @@
-﻿using System;
+﻿// verander de toolmenu misschien naar een static class
+// zodat als er een play is, de stop en pauze weten welke file gespeeld wordt.
+//
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,17 +11,16 @@ using System.Windows.Forms;
 using System.IO;
 using Roboard;
 using Roboard.Events;
-using Ini;
 
 namespace KHR_1HV
 {
-    public partial class KHR_1HV_ToolForm : Form
+    public partial class KHR_1HV_ToolMenu : Form
     {
         private int selectedMotionIndex;
-        private KHR_1HV_ToolForm toolForm;
+        private KHR_1HV_ToolMenu toolForm;
         private IniFile motionData;
 
-        public KHR_1HV_ToolForm()
+        public KHR_1HV_ToolMenu()
         {
             InitializeComponent();
             selectedMotionIndex = -1;
@@ -26,7 +28,7 @@ namespace KHR_1HV
 
         private void KHR_1HV_ToolForm_Load(object sender, EventArgs e)
         {
-            toolForm = (KHR_1HV_ToolForm)sender;
+            toolForm = (KHR_1HV_ToolMenu)sender;
 
             for (int i = 0; i < StaticUtilities.numberOfMotions; i++)
             {
@@ -50,7 +52,8 @@ namespace KHR_1HV
                     switch (toolForm.Text)
                     {
                         case "Delete":
-                            NetworkFile deleteMotion = new NetworkFile();
+                            
+                            ToolMenu deleteMotion = new ToolMenu();
                             deleteMotion.SelectedMotionIndex = this.selectedMotionIndex;
                             if (deleteMotion.Delete())
                             {
@@ -64,13 +67,13 @@ namespace KHR_1HV
                                 this.DialogResult = DialogResult.Abort;
                             break;
                         case "Play":
-                            NetworkFile playMotion = new NetworkFile();
+                            ToolMenu playMotion = new ToolMenu();
                             playMotion.SelectedMotionIndex = this.selectedMotionIndex;
                             playMotion.Play();
                             this.DialogResult = System.Windows.Forms.DialogResult.Yes;
                             break;
                         case "Read":
-                            NetworkFile readMotion = new NetworkFile();
+                            ToolMenu readMotion = new ToolMenu();
                             readMotion.SelectedMotionIndex = this.selectedMotionIndex;
                             if (readMotion.Read())
                             {
@@ -82,7 +85,7 @@ namespace KHR_1HV
                             break;
                         case "Write":
                             this.Cursor = Cursors.WaitCursor;
-                            NetworkFile writeMotion = new NetworkFile();
+                            ToolMenu writeMotion = new ToolMenu();
                             writeMotion.SelectedMotionIndex = this.selectedMotionIndex;
                             writeMotion.MotionData = this.motionData;
                             if (!writeMotion.Write())

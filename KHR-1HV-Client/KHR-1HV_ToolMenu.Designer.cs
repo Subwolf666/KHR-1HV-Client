@@ -1,6 +1,6 @@
 ﻿namespace KHR_1HV
 {
-    partial class KHR_1HV_ToolForm
+    partial class KHR_1HV_ToolMenu
     {
         /// <summary>
         /// Required designer variable.

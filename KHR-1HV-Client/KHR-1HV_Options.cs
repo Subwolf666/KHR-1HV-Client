@@ -24,20 +24,14 @@ namespace KHR_1HV
         private void KHR_1HV_Options_Load(object sender, EventArgs e)
         {
             // Create or copy the motion data table for this class
-            for (int i = 0; i < StaticUtilities.numberOfMotions; i++)
+            if (Roboard.DataTable.Done)
             {
-                if (Roboard.DataTable.Done)
+                for (int i = 0; i < StaticUtilities.numberOfMotions; i++)
                 {
                     comboBox1.Items.Add(string.Format("{0}   {1}", Roboard.DataTable.motionDataTable[i, 0], Roboard.DataTable.motionDataTable[i, 3]));
                     comboBox2.Items.Add(string.Format("{0}   {1}", Roboard.DataTable.motionDataTable[i, 0], Roboard.DataTable.motionDataTable[i, 3]));
                 }
-                else
-                {
-                    comboBox1.Items.Add(string.Format("{0}   --/--/---- --:--", i + 1));
-                    comboBox2.Items.Add(string.Format("{0}   --/--/---- --:--", i + 1));
-                }
             }
-
             nudLowPowerValues.Minimum = 5.5M;
             nudLowPowerValues.Maximum = 15.0M;
             nudLowPowerValues.Increment = 0.1M;
@@ -52,9 +46,11 @@ namespace KHR_1HV
             {
                 cbMotionReplay.Checked = Convert.ToBoolean(saReturnMessage[0]);
                 cbEnableRemoteControl.Checked = Convert.ToBoolean(saReturnMessage[1]);
-                comboBox1.SelectedIndex = Convert.ToInt32(saReturnMessage[2]);
-
-                comboBox2.SelectedIndex = Convert.ToInt32(saReturnMessage[3]);
+                if (Roboard.DataTable.Done)
+                {
+                    comboBox1.SelectedIndex = Convert.ToInt32(saReturnMessage[2]);
+                    comboBox2.SelectedIndex = Convert.ToInt32(saReturnMessage[3]);
+                }
                 decimal LowPowerValue = Convert.ToDecimal(saReturnMessage[4]) / 10;
                 if ((LowPowerValue >= nudLowPowerValues.Minimum) && (LowPowerValue <= nudLowPowerValues.Maximum))
                     nudLowPowerValues.Value = LowPowerValue;
@@ -96,7 +92,9 @@ namespace KHR_1HV
         //
         private void KHR_1HV_Options_FormClosing(object sender, FormClosingEventArgs e)
         {
+
             int dummy = Convert.ToInt32(this.nudLowPowerValues.Value * 10);
+
             this.sendString = this.cbMotionReplay.Checked.ToString() + "," +
                                 this.cbEnableRemoteControl.Checked.ToString() + "," +
                                 this.comboBox1.SelectedIndex.ToString() + "," +
