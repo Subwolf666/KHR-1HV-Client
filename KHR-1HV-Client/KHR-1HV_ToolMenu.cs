@@ -52,10 +52,8 @@ namespace KHR_1HV
                     switch (toolForm.Text)
                     {
                         case "Delete":
-                            
-                            ToolMenu deleteMotion = new ToolMenu();
-                            deleteMotion.SelectedMotionIndex = this.selectedMotionIndex;
-                            if (deleteMotion.Delete())
+                            ToolMenu.SelectedMotionIndex = this.selectedMotionIndex;
+                            if (ToolMenu.Delete())
                             {
                                 Roboard.DataTable.motionDataTable[selectedMotionIndex, 1] = string.Empty;  // name
                                 Roboard.DataTable.motionDataTable[selectedMotionIndex, 2] = string.Format("{0}", 0); // count
@@ -67,17 +65,16 @@ namespace KHR_1HV
                                 this.DialogResult = DialogResult.Abort;
                             break;
                         case "Play":
-                            ToolMenu playMotion = new ToolMenu();
-                            playMotion.SelectedMotionIndex = this.selectedMotionIndex;
-                            playMotion.Play();
-                            this.DialogResult = System.Windows.Forms.DialogResult.Yes;
+                            ToolMenu.SelectedMotionIndex = this.selectedMotionIndex;
+                            ToolMenu.Play();
+                            this.DialogResult = DialogResult.OK;
                             break;
                         case "Read":
-                            ToolMenu readMotion = new ToolMenu();
-                            readMotion.SelectedMotionIndex = this.selectedMotionIndex;
-                            if (readMotion.Read())
+                            this.Cursor = Cursors.WaitCursor;
+                            ToolMenu.SelectedMotionIndex = this.selectedMotionIndex;
+                            if (ToolMenu.Read())
                             {
-                                this.motionData = readMotion.MotionData;
+                                this.motionData = ToolMenu.MotionData;
                                 this.DialogResult = DialogResult.OK;
                             }
                             else
@@ -85,12 +82,14 @@ namespace KHR_1HV
                             break;
                         case "Write":
                             this.Cursor = Cursors.WaitCursor;
-                            ToolMenu writeMotion = new ToolMenu();
-                            writeMotion.SelectedMotionIndex = this.selectedMotionIndex;
-                            writeMotion.MotionData = this.motionData;
-                            if (!writeMotion.Write())
+                            ToolMenu.SelectedMotionIndex = this.selectedMotionIndex;
+                            ToolMenu.MotionData = this.motionData;
+                            if (!ToolMenu.Write())
+                            {
+                                this.Cursor = Cursors.Default;
+                                this.DialogResult = DialogResult.Cancel;
                                 return;
-
+                            }
                             // and adjust my own dataTable
                             // by inserting the written motion
                             //
@@ -107,7 +106,6 @@ namespace KHR_1HV
                             this.DialogResult = DialogResult.Cancel;
                             break;
                     }
-//                    this.DialogResult = DialogResult.OK;
                     this.Cursor = Cursors.Default;
                 }
                 else
