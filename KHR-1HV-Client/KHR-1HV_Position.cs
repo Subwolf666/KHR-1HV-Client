@@ -8,7 +8,6 @@ using System.Windows.Forms;
 using Roboard;
 using Roboard.Events;
 using HorizontalSlider;
-//using Ini;
 
 namespace KHR_1HV
 {
@@ -93,8 +92,8 @@ namespace KHR_1HV
                 horizontalSliderArray[index].sliderFunction = _iniPosValues.PosChannelFunction[index];
                 horizontalSliderArray[index].sliderLabel = _iniPosValues.PosChannelName[index];
                 horizontalSliderArray[index].Visible = _iniPosValues.PosChannelVisible[index];
-                horizontalSliderArray[index].sliderMaxRange = 400;
-                horizontalSliderArray[index].sliderMinRange = -400;
+                //horizontalSliderArray[index].sliderMaxRange = 400;
+                //horizontalSliderArray[index].sliderMinRange = -400;
                 this.Controls.Add(horizontalSliderArray[index]);
                 // the event for the sliderchange
                 horizontalSliderArray[index].SliderControlChanged += new HorizontalSlider.SliderControl.SliderControlEventHandler(KHR_1HV_Position_SliderControlChanged);

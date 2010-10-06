@@ -68,7 +68,7 @@ namespace KHR_1HV
         private bool RoboardConnected;
         private bool MotionDataTableLoaded;
         private string chosenFile = string.Empty;
-        private bool donePlaying = true;
+//        private bool donePlaying = true;
         
         //=======================
         //  DEFAULT CONSTRUCTOR
@@ -116,11 +116,17 @@ namespace KHR_1HV
                 Roboard.NetworkClient.CloseConnection();
                 setConnect((int)MyComboBox.Close);
             }
-            else if (e.NewMessage == "DonePlaying")
-            {
-                displayMessage("Playing motion done");
-                donePlaying = true;
-            }
+            //else if (e.NewMessage == "StartPlaying")
+            //{
+            //    displayMessage("Playing motion");
+            //    donePlaying = false;
+            //}
+            //else if (e.NewMessage == "DonePlaying")
+            //{
+            //    displayMessage("Stopped playing motion");
+            //    donePlaying = true;
+            //}
+
         }
 
         //==========================
@@ -334,7 +340,7 @@ namespace KHR_1HV
                     }
                     break;
                 case eToolStripMenu.INFORMATION:
-                    if ((this.RoboardConnected) && (this.donePlaying))
+                    if (this.RoboardConnected)
                     {
                         KHR_1HV_Information InformationForm = new KHR_1HV_Information();
                         InformationForm.ShowDialog();
@@ -350,7 +356,7 @@ namespace KHR_1HV
                 //  COMMAND MENU
                 //
                 case eToolStripMenu.TRIM:
-                    if ((RoboardConnected) && (donePlaying))
+                    if (RoboardConnected)
                     {
                         // get trim values from the server
                         KHR_1HV_Trim secondForm = new KHR_1HV_Trim();
@@ -358,14 +364,14 @@ namespace KHR_1HV
                     }
                     break;
                 case eToolStripMenu.OPTION:
-                    if ((RoboardConnected) && (donePlaying))
+                    if (RoboardConnected)
                     {
                         KHR_1HV_Options optionsForm = new KHR_1HV_Options();
                         optionsForm.ShowDialog();
                     }
                     break;
                 case eToolStripMenu.ANALOG:
-                    if ((RoboardConnected) && (donePlaying))
+                    if (RoboardConnected)
                     {
                         KHR_1HV_Sensors AnalogForm = new KHR_1HV_Sensors();
                         AnalogForm.ShowDialog();
@@ -374,14 +380,14 @@ namespace KHR_1HV
                 case eToolStripMenu.ICS:
                     break;
                 case eToolStripMenu.RECEIVER:
-                    if ((RoboardConnected) && (donePlaying))
+                    if (RoboardConnected)
                     {
                         KHR_1HV_XBox360Controller myXBox360 = new KHR_1HV_XBox360Controller();
                         myXBox360.ShowDialog();
                     }
                     break;
                 case eToolStripMenu.TABLE:
-                    if ((RoboardConnected) && (donePlaying))
+                    if (RoboardConnected)
                     {
                         KHR_1HV_DataTable myDataTable = new KHR_1HV_DataTable();
                         myDataTable.ShowDialog();
@@ -398,22 +404,16 @@ namespace KHR_1HV
                 case eToolStripMenu.STARTFLAG:
                     break;
                 case eToolStripMenu.POSITION:
-                    if (donePlaying)
-                    {
-                        tsSelect.CheckState = CheckState.Unchecked;
-                        tsPos.CheckState = CheckState.Checked;
-                        KHR_1HV_Position PositionForm = new KHR_1HV_Position();
-                        // de juiste position uit de readini halen voor de form.
-                        PositionForm.IniBestand = readIni;
-                        PositionForm.ShowDialog();
-                    }
+                    tsSelect.CheckState = CheckState.Unchecked;
+                    tsPos.CheckState = CheckState.Checked;
+                    KHR_1HV_Position PositionForm = new KHR_1HV_Position();
+                    // de juiste position uit de readini halen voor de form.
+                    PositionForm.IniBestand = readIni;
+                    PositionForm.ShowDialog();
                     break;
                 case eToolStripMenu.SET:
-                    if (donePlaying)
-                    {
-                        KHR_1HV_Set SetForm = new KHR_1HV_Set();
-                        SetForm.ShowDialog();
-                    }
+                    KHR_1HV_Set SetForm = new KHR_1HV_Set();
+                    SetForm.ShowDialog();
                     break;
                 case eToolStripMenu.MIX:
                     break;
@@ -429,17 +429,17 @@ namespace KHR_1HV
                 //  TOOL MENU
                 //
                 case eToolStripMenu.HOMEPOSITION:
-                    if ((RoboardConnected) && (donePlaying))
+                    if (RoboardConnected)
                     {
                     }
                     break;
                 case eToolStripMenu.TRIMPOSITION:
-                    if ((RoboardConnected) && (donePlaying))
+                    if (RoboardConnected)
                     {
                     }
                     break;
                 case eToolStripMenu.WRITE:
-                    if ((RoboardConnected) && (MotionDataTableLoaded) && (donePlaying))
+                    if ((RoboardConnected) && (MotionDataTableLoaded))
                     {
                         KHR_1HV_ToolMenu myWrite = new KHR_1HV_ToolMenu();
                         myWrite.Text = "Write";
@@ -449,7 +449,7 @@ namespace KHR_1HV
                     }
                     break;
                 case eToolStripMenu.READ:
-                    if ((RoboardConnected) && (MotionDataTableLoaded) && (donePlaying))
+                    if ((RoboardConnected) && (MotionDataTableLoaded))
                     {
                         KHR_1HV_ToolMenu myRead = new KHR_1HV_ToolMenu();
                         myRead.Text = "Read";
@@ -465,7 +465,7 @@ namespace KHR_1HV
                     }
                     break;
                 case eToolStripMenu.DELETE:
-                    if ((RoboardConnected) && (MotionDataTableLoaded) && (donePlaying))
+                    if ((RoboardConnected) && (MotionDataTableLoaded))
                     {
                         KHR_1HV_ToolMenu myDelete = new KHR_1HV_ToolMenu();
                         myDelete.Text = "Delete";
@@ -474,26 +474,33 @@ namespace KHR_1HV
                     }
                     break;
                 case eToolStripMenu.STOP:
-                    if ((RoboardConnected) && (MotionDataTableLoaded) && (!donePlaying))
+                    if (RoboardConnected)
                     {
                         ToolMenu.Stop();
                     }
                     break;
                 case eToolStripMenu.PAUSE:
-                    if ((RoboardConnected) && (MotionDataTableLoaded) && (!donePlaying))
+                    if (RoboardConnected)
                     {
                         ToolMenu.Pause();
                     }
                     break;
                 case eToolStripMenu.PLAY:
-                    if ((RoboardConnected) && (MotionDataTableLoaded) && (donePlaying))
+                    if ((RoboardConnected) && (MotionDataTableLoaded))
                     {
                         KHR_1HV_ToolMenu myPlay = new KHR_1HV_ToolMenu();
                         myPlay.Text = "Play";
                         myPlay.Label = "Select the motion or scenario to play";
                         myPlay.SelectedMotionIndex = 0;
                         myPlay.ShowDialog();
-                        donePlaying = false;
+                        //if (myPlay.DialogResult == DialogResult.OK)
+                        //{
+                        //    displayMessage("Playing motion");
+                        //}
+                        //else
+                        //{
+                        //    displayMessage("No motion selected");
+                        //}
                     }
                     break;
                 default:
