@@ -23,8 +23,6 @@ public enum eToolStripMenu : int
     ICS,
     RECEIVER,
     TABLE,
-//    SYNC,
-//    CONNECT,
     SELECT,
     GRID,
     STARTFLAG,
@@ -44,23 +42,20 @@ public enum eToolStripMenu : int
     PAUSE,
     PLAY
 }
+public enum MyComboBox : int
+{
+    Close = 0,
+    Open
+}
 
 namespace KHR_1HV
 {
     public partial class KHR_1HV_Main : Form
     {
         //===================
-        //
-        enum MyComboBox
-        {
-            Close = 0,
-            Open
-        }
-
-        //===================
         //  CLASS VARIABLES 
         //===================        
-        KHR_1HV_IniFile readIni;
+        KHR_1HV_IniFile KHR1HV_Ini;
         IniFile currentMotion;
         KHR_1HV_MotionFile readsMotion;
         private string IPAddress;
@@ -68,8 +63,11 @@ namespace KHR_1HV
         private bool RoboardConnected;
         private bool MotionDataTableLoaded;
         private string chosenFile = string.Empty;
-//        private bool donePlaying = true;
-        
+
+        private static int numOfPos = 100;
+        private int[] m_theShape = new int[numOfPos];
+        private Color m_theColor = Color.Red;
+
         //=======================
         //  DEFAULT CONSTRUCTOR
         //=======================
@@ -85,25 +83,19 @@ namespace KHR_1HV
             DataSheet.Image = null; // Clean Datasheet
 
             // Read the KHR-1HV initialization file.
-            readIni = new KHR_1HV_IniFile();
-            readIni.Read();
+            KHR1HV_Ini = new KHR_1HV_IniFile();
+            KHR1HV_Ini.Read();
 
             // Create the motion file 
             readsMotion = new KHR_1HV_MotionFile();
             currentMotion = readsMotion.newMotion();
-
+            
             this.Closing += new System.ComponentModel.CancelEventHandler(this.KHR_1HV_Main_Closing);
             displayMessage("No Connection");
 
-            //m_theRect = new Rectangle[numOfPos];
-            //for (int i = 0; i < numOfPos; i++)
-            //{
-            //    // Initialize one variable
-            //    m_theRect[i] = new Rectangle();
-            //}
             DataSheet.Size = new Size(Convert.ToInt32(currentMotion["GraphicalEdit"]["Width"]) + 1, Convert.ToInt32(currentMotion["GraphicalEdit"]["Height"]) + 1);
             this.Size = new Size((27 + Convert.ToInt32(currentMotion["GraphicalEdit"]["Width"])), Convert.ToInt32(currentMotion["GraphicalEdit"]["Height"]) + 175);
-            this.IPAddress = readIni.IPAddress;
+            this.IPAddress = KHR1HV_Ini.IPAddress;
             Roboard.NetworkClient.ServerIPAddress = this.IPAddress;
 
             Roboard.NetworkClient.messageHandler += new NetworkClient.NewMessageEventHandler(NetworkClient_messageHandler);
@@ -116,17 +108,6 @@ namespace KHR_1HV
                 Roboard.NetworkClient.CloseConnection();
                 setConnect((int)MyComboBox.Close);
             }
-            //else if (e.NewMessage == "StartPlaying")
-            //{
-            //    displayMessage("Playing motion");
-            //    donePlaying = false;
-            //}
-            //else if (e.NewMessage == "DonePlaying")
-            //{
-            //    displayMessage("Stopped playing motion");
-            //    donePlaying = true;
-            //}
-
         }
 
         //==========================
@@ -145,8 +126,8 @@ namespace KHR_1HV
             }
             Roboard.NetworkClient.messageHandler -= new NetworkClient.NewMessageEventHandler(NetworkClient_messageHandler);
             Roboard.NetworkClient.CloseConnection();
-            readIni.WriteGrid();
-            readIni.Save();
+            KHR1HV_Ini.WriteGrid();
+            KHR1HV_Ini.Save();
         }
         
         private bool exitForm()
@@ -160,72 +141,6 @@ namespace KHR_1HV
             }
             else
                 return false;
-        }
-
-        private static int numOfPos = 100;
-        private int[] m_theShape = new int[numOfPos];
-        //private Rectangle[] m_theRect;
-        private Color m_theColor = Color.Red;
-
-        private void contextMenuHandler(object sender, EventArgs e)
-        {
-            ToolStripMenuItem mi = sender as ToolStripMenuItem;
-            if (mi != null)
-            {
-                Color c;
-                if (mi.Text == "Red")
-                    c = Color.Red;
-                else if (mi.Text == "Blue")
-                    c = Color.Blue;
-                else
-                    c = Color.Yellow;
-                this.BackColor = c;
-
-                DataSheet.Invalidate();
-            }
-        }
-
-        private void contextMenu2Handler(object sender, EventArgs e)
-        {
-            ToolStripMenuItem mi = sender as ToolStripMenuItem;
-
-            if (mi != null)
-            {
-                for (int i = 0; i < numOfPos; i++)
-                {
-                    if (mi == circleItem)
-                        m_theShape[i] = 1;
-                    else
-                        m_theShape[i] = 0;
-
-                    Invalidate();
-                }
-            }            
-        }
-        /// <summary>
-        /// Verander hier tussen de twee verschillende contextmenu's
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void DataSheet_MouseUp(object sender, MouseEventArgs e)
-        {
-            bool contextmenu = false;
-            if (e.Button != MouseButtons.Right) return;
-
-            //for (int i = 0; i < numOfPos; i++)
-            //{
-            //    if (m_theRect[i].Contains(e.X, e.Y))
-            //    {
-            //        contextMenu1.Show(DataSheet, new Point(e.X, e.Y));
-            //        contextmenu = true;
-            //        break;
-            //    }
-            //}
-            if (!contextmenu)
-            {
-                contextMenu2.Show(DataSheet, new Point(e.X, e.Y));
-            }
-            contextmenu = false;
         }
 
         // Method
@@ -319,8 +234,8 @@ namespace KHR_1HV
                     KHR_1HV_Properties propForm = new KHR_1HV_Properties();
                     propForm.sizeWidth = this.DataSheet.Width;
                     propForm.sizeHeight = this.DataSheet.Height;
-                    propForm.GridX = this.readIni.GridWidth;
-                    propForm.GridY = this.readIni.GridHeight;
+                    propForm.GridX = this.KHR1HV_Ini.GridWidth;
+                    propForm.GridY = this.KHR1HV_Ini.GridHeight;
                     propForm.ToolMenu = this.tsToolMenu.Visible;
                     propForm.PartsMenu = this.tsObjectMenu.Visible;
                     propForm.CommSettings = this.tsCommunicationsMenu.Visible;
@@ -335,8 +250,8 @@ namespace KHR_1HV
                         this.tsObjectMenu.Visible = propForm.PartsMenu;
                         this.tsCommunicationsMenu.Visible = propForm.CommSettings;
                         this.tsCommandMenu.Visible = propForm.CommandMenu;
-                        this.readIni.GridWidth = propForm.GridX;
-                        this.readIni.GridHeight = propForm.GridY;
+                        this.KHR1HV_Ini.GridWidth = propForm.GridX;
+                        this.KHR1HV_Ini.GridHeight = propForm.GridY;
                     }
                     break;
                 case eToolStripMenu.INFORMATION:
@@ -394,10 +309,17 @@ namespace KHR_1HV
                         this.MotionDataTableLoaded = myDataTable.Done;
                     }
                     break;
-                //
-                //  OBJECT MENU
-                //
+//=============================================================================
+//  OBJECT MENU
+//=============================================================================
                 case eToolStripMenu.SELECT:
+                    tsSelect.CheckState = CheckState.Checked;
+                    tsPos.CheckState = CheckState.Unchecked;
+                    tsSet.CheckState = CheckState.Unchecked;
+                    tsMix.CheckState = CheckState.Unchecked;
+                    tsCompare.CheckState = CheckState.Unchecked;
+                    tsFlowWiring.CheckState = CheckState.Unchecked;
+                    tsBranchWiring.CheckState = CheckState.Unchecked;
                     break;
                 case eToolStripMenu.GRID:
                     break;
@@ -406,28 +328,62 @@ namespace KHR_1HV
                 case eToolStripMenu.POSITION:
                     tsSelect.CheckState = CheckState.Unchecked;
                     tsPos.CheckState = CheckState.Checked;
-                    KHR_1HV_Position PositionForm = new KHR_1HV_Position();
-                    // de juiste position uit de readini halen voor de form.
-                    PositionForm.IniBestand = readIni;
-                    PositionForm.ShowDialog();
+                    tsSet.CheckState = CheckState.Unchecked;
+                    tsMix.CheckState = CheckState.Unchecked;
+                    tsCompare.CheckState = CheckState.Unchecked;
+                    tsFlowWiring.CheckState = CheckState.Unchecked;
+                    tsBranchWiring.CheckState = CheckState.Unchecked;
                     break;
                 case eToolStripMenu.SET:
-                    KHR_1HV_Set SetForm = new KHR_1HV_Set();
-                    SetForm.ShowDialog();
+                    tsSelect.CheckState = CheckState.Unchecked;
+                    tsPos.CheckState = CheckState.Unchecked;
+                    tsSet.CheckState = CheckState.Checked;
+                    tsMix.CheckState = CheckState.Unchecked;
+                    tsCompare.CheckState = CheckState.Unchecked;
+                    tsFlowWiring.CheckState = CheckState.Unchecked;
+                    tsBranchWiring.CheckState = CheckState.Unchecked;
                     break;
                 case eToolStripMenu.MIX:
+                    tsSelect.CheckState = CheckState.Unchecked;
+                    tsPos.CheckState = CheckState.Unchecked;
+                    tsSet.CheckState = CheckState.Unchecked;
+                    tsMix.CheckState = CheckState.Checked;
+                    tsCompare.CheckState = CheckState.Unchecked;
+                    tsFlowWiring.CheckState = CheckState.Unchecked;
+                    tsBranchWiring.CheckState = CheckState.Unchecked;
                     break;
                 case eToolStripMenu.COMPARE:
+                    tsSelect.CheckState = CheckState.Unchecked;
+                    tsPos.CheckState = CheckState.Unchecked;
+                    tsSet.CheckState = CheckState.Unchecked;
+                    tsMix.CheckState = CheckState.Unchecked;
+                    tsCompare.CheckState = CheckState.Checked;
+                    tsFlowWiring.CheckState = CheckState.Unchecked;
+                    tsBranchWiring.CheckState = CheckState.Unchecked;
                     break;
                 case eToolStripMenu.FLOWWIRING:
+                    tsSelect.CheckState = CheckState.Unchecked;
+                    tsPos.CheckState = CheckState.Unchecked;
+                    tsSet.CheckState = CheckState.Unchecked;
+                    tsMix.CheckState = CheckState.Unchecked;
+                    tsCompare.CheckState = CheckState.Unchecked;
+                    tsFlowWiring.CheckState = CheckState.Checked;
+                    tsBranchWiring.CheckState = CheckState.Unchecked;
                     break;
                 case eToolStripMenu.BRANCHWIRING:
+                    tsSelect.CheckState = CheckState.Unchecked;
+                    tsPos.CheckState = CheckState.Unchecked;
+                    tsSet.CheckState = CheckState.Unchecked;
+                    tsMix.CheckState = CheckState.Unchecked;
+                    tsCompare.CheckState = CheckState.Unchecked;
+                    tsFlowWiring.CheckState = CheckState.Unchecked;
+                    tsBranchWiring.CheckState = CheckState.Checked;
                     break;
                 case eToolStripMenu.COMPILE:
                     break;
-                //
-                //  TOOL MENU
-                //
+//=============================================================================
+//  TOOL MENU
+//=============================================================================
                 case eToolStripMenu.HOMEPOSITION:
                     if (RoboardConnected)
                     {
@@ -493,14 +449,6 @@ namespace KHR_1HV
                         myPlay.Label = "Select the motion or scenario to play";
                         myPlay.SelectedMotionIndex = 0;
                         myPlay.ShowDialog();
-                        //if (myPlay.DialogResult == DialogResult.OK)
-                        //{
-                        //    displayMessage("Playing motion");
-                        //}
-                        //else
-                        //{
-                        //    displayMessage("No motion selected");
-                        //}
                     }
                     break;
                 default:
@@ -509,16 +457,9 @@ namespace KHR_1HV
             Roboard.NetworkClient.messageHandler += new NetworkClient.NewMessageEventHandler(NetworkClient_messageHandler);
         }
 
-        private void DataSheet_Click(object sender, EventArgs e)
-        {
-            tsSelect.CheckState = CheckState.Checked;
-            tsPos.CheckState = CheckState.Unchecked;
-        }
-
-        //===============================
-        //  COMMUNICATION SETTINGS MENU
-        //===============================
-
+//=============================================================================
+//  COMMUNICATION SETTINGS MENU
+//=============================================================================
         private void tsConnect_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
@@ -535,42 +476,6 @@ namespace KHR_1HV
             //  SYNCHRONIZATION WITH THE ROBOARD
             //====================================
 //            client.Synchronization = tsSync.Checked;
-        }
-
-        private void DataSheet_DoubleClick(object sender, EventArgs e)
-        {
-            DialogResult dr = new DialogResult();
-            KHR_1HV_DataDialog DataDialog = new KHR_1HV_DataDialog();
-            DataDialog.dataName = currentMotion["GraphicalEdit"]["Name"];
-            if ((currentMotion["GraphicalEdit"]["Ctrl"] == string.Empty) || (currentMotion["GraphicalEdit"]["Ctrl"] == "0"))
-                DataDialog.remoteControllerCode = "65535";
-            else
-                DataDialog.remoteControllerCode = currentMotion["GraphicalEdit"]["Ctrl"];
-
-            dr = DataDialog.ShowDialog();
-            if (dr == DialogResult.OK)
-            {
-                if (DataDialog.dataName == string.Empty)
-                    this.tcDataSheet.TabPages[0].Text = "EDIT " + "no title";
-                else
-                    this.tcDataSheet.TabPages[0].Text = "EDIT " + DataDialog.dataName;
-
-                currentMotion["GraphicalEdit"]["Name"] = DataDialog.dataName;
-                currentMotion["GraphicalEdit"]["Ctrl"] = DataDialog.remoteControllerCode;
-
-            }
-            else if (dr == DialogResult.Cancel)
-            {
-            }
-        }
-
-        private void DataSheet_MouseMove(object sender, MouseEventArgs e)
-        {
-            //=======================================================
-            //  DISPLAYS THE X AND Y COORDINATES IN THE STATUSSTRIP
-            //=======================================================
-            tsStatusLabelX.Text = "X = " + e.X.ToString();
-            tsStatusLabelY.Text = "Y = " + e.Y.ToString();
         }
 
         //  METHOD
@@ -606,5 +511,401 @@ namespace KHR_1HV
                 this.tsTextBoxMessage.Text = currentTime.ToString("T") + "> " + messageToDisplay;
             }
         }
+
+        private void DataSheet_MouseMove(object sender, MouseEventArgs e)
+        {
+            //=======================================================
+            //  DISPLAYS THE X AND Y COORDINATES IN THE STATUSSTRIP
+            //=======================================================
+            tsStatusLabelX.Text = "X = " + e.X.ToString();
+            tsStatusLabelY.Text = "Y = " + e.Y.ToString();
+        }
+
+//=============================================================================
+//
+//=============================================================================
+        // The Item number for the iniFile
+        int Item = 0;
+        // The Pos number for the rectangle position name
+        int Pos = 1;
+        // Standard width and height
+        int iWidth = 50;
+        int iHeight = 30;
+
+        // Keep track of when fake drag or resize mode is enabled.
+        private bool isDragging = false;
+//        private bool isResizing = false;
+
+        // Store the location where the user clicked on the control.
+        private int clickOffsetX, clickOffsetY;
+
+
+        private void contextMenuHandler(object sender, EventArgs e)
+        {
+            DataSheet.Invalidate();
+        }
+
+        /// <summary>
+        /// In deze functie wordt de keuze gemaakt welk menu item gekozen wordt.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void contextMenu2Handler(object sender, EventArgs e)
+        {
+        }
+
+        private void DataSheet_DoubleClick(object sender, EventArgs e)
+        {
+            DialogResult dr = new DialogResult();
+            KHR_1HV_DataDialog DataDialog = new KHR_1HV_DataDialog();
+            DataDialog.dataName = currentMotion["GraphicalEdit"]["Name"];
+            if ((currentMotion["GraphicalEdit"]["Ctrl"] == string.Empty) || (currentMotion["GraphicalEdit"]["Ctrl"] == "0"))
+                DataDialog.remoteControllerCode = "65535";
+            else
+                DataDialog.remoteControllerCode = currentMotion["GraphicalEdit"]["Ctrl"];
+
+            dr = DataDialog.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                if (DataDialog.dataName == string.Empty)
+                    this.tcDataSheet.TabPages[0].Text = "EDIT " + "no title";
+                else
+                    this.tcDataSheet.TabPages[0].Text = "EDIT " + DataDialog.dataName;
+
+                currentMotion["GraphicalEdit"]["Name"] = DataDialog.dataName;
+                currentMotion["GraphicalEdit"]["Ctrl"] = DataDialog.remoteControllerCode;
+
+            }
+            else if (dr == DialogResult.Cancel)
+            {
+            }
+        }
+
+        //bool firstPos = true;
+        private void DataSheet_MouseDown(object sender, MouseEventArgs e)
+        {
+            //Control currentCtrl;
+            //currentCtrl = (Control)sender;
+            if (e.Button == MouseButtons.Right)
+            {
+                DataSheet.ContextMenuStrip.Show(DataSheet, new Point(e.X, e.Y));
+            }
+            else if (e.Button == MouseButtons.Left)
+            {
+                // Create and configure the shape with some defaults.
+                Shape newShape = new Shape();
+                newShape.Size = new Size(iWidth, iHeight);
+                bool objectMenuSelected = false;
+
+                if (tsPos.Checked == true)
+                {
+                    newShape.Name = "Position";// misschien moet hier de itemnummer komen te staan, zodat het uniek blijft.
+                    newShape.Type = Shape.ShapeType.PosRectangle;
+                    newShape.ForeColor = Color.Coral;
+                    newShape.Tag = string.Format("Item{0}", Item);
+                    objectMenuSelected = true;
+                    //if (firstPos)
+                    {
+                        IniSection section = new IniSection();
+                        section.Add("Name", string.Format("POS{0}",Pos));
+                        section.Add("Width", iWidth.ToString());
+                        section.Add("Height", iHeight.ToString());
+                        section.Add("Left", e.X.ToString());
+                        section.Add("Top", e.Y.ToString());
+                        section.Add("Color", ColorTranslator.ToOle(Color.Black).ToString());
+                        section.Add("Type", "0");
+                        section.Add("Prm", "100,16384,16384,16384,16384,16384,16384,16384,16384,16384,16384,16384,16384,16384,16384,16384,16384,16384,16384,16384,16384,16384,16384,16384,16384");
+                        currentMotion.Add(string.Format("Item{0}", Item), section);
+                        Item++;
+                        Pos++;
+                        //firstPos = false;
+                    }
+                    //else
+                    {
+                        // copy van de vorige?
+                    }
+                    //currentMotion[string.Format("Item{0}", Item)]["Name"] = "POS1";
+                    //currentMotion[string.Format("Item{0}", Item)]["Width"] = iWidth.ToString();
+                    //currentMotion[string.Format("Item{0}", Item)]["Height"] = iHeight.ToString();
+                    //currentMotion[string.Format("Item{0}", Item)]["Left"] = e.X.ToString();
+                    //currentMotion[string.Format("Item{0}", Item)]["Top"] = e.Y.ToString();
+                    //currentMotion[string.Format("Item{0}", Item)]["Color"] = ColorTranslator.ToOle(Color.Black).ToString();
+                    //currentMotion[string.Format("Item{0}", Item)]["Type"] = "0";
+                    //currentMotion[string.Format("Item{0}", Item)]["Prm"] = "100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0";
+
+                }
+                else if (tsSet.Checked == true)
+                {
+                    newShape.Name = "Set";
+                    newShape.Type = Shape.ShapeType.Ellipse;
+                    newShape.ForeColor = Color.Blue;
+                    objectMenuSelected = true;
+                }
+                else if (tsMix.Checked == true)
+                {
+                    newShape.Name = "Mix";
+                    newShape.Type = Shape.ShapeType.Ellipse;
+                    newShape.ForeColor = Color.Red;
+                    objectMenuSelected = true;
+                }
+                else if (tsCompare.Checked == true)
+                {
+                    newShape.Name = "Compare";
+                    newShape.Type = Shape.ShapeType.Ellipse;
+                    newShape.ForeColor = Color.SlateGray;
+                    objectMenuSelected = true;
+                }
+                if (objectMenuSelected == true)
+                {
+                    // To determine where to place the shape, you need to convert the 
+                    // current screen-based mouse coordinates into relative form coordinates.
+                    newShape.Location = DataSheet.PointToClient(Control.MousePosition);
+
+                    // Attach a context menu to the shape.
+                    newShape.ContextMenuStrip = contextMenu1;
+
+                    // Connect the shape to all its event handlers.
+                    newShape.MouseDown += new MouseEventHandler(newShape_MouseDown);
+                    newShape.MouseMove += new MouseEventHandler(newShape_MouseMove);
+                    newShape.MouseUp += new MouseEventHandler(newShape_MouseUp);
+                    newShape.MouseDoubleClick += new MouseEventHandler(newShape_MouseDoubleClick);
+                    // Add the shape to the form.
+                    DataSheet.Controls.Add(newShape);
+
+                    //currentMotion
+                }
+            }
+        }
+
+        void newShape_MouseDown(object sender, MouseEventArgs e)
+        {
+            // Retrieve a reference to the active label.
+            Control currentCtrl;
+            currentCtrl = (Control)sender;
+
+            if (e.Button == MouseButtons.Right)
+            {
+                // Show the context menu.
+                currentCtrl.ContextMenuStrip.Show(currentCtrl, new Point(e.X, e.Y));
+            }
+            else if (e.Button == MouseButtons.Left)
+            {
+                clickOffsetX = e.X;
+                clickOffsetY = e.Y;
+
+                //if ((e.X + 5) > currentCtrl.Width || (e.Y + 5) > currentCtrl.Height)
+                //{
+                //    // The mouse pointer is in the bottom right corner,
+                //    // so resizing mode is appropriate.
+                //    isResizing = true;
+                //}
+                //else
+                {
+                    // The mouse is somewhere else, so dragging mode is
+                    // appropriate.
+                    isDragging = true;
+                }
+            }
+        }
+
+        void newShape_MouseMove(object sender, MouseEventArgs e)
+        {
+            // Retrieve a reference to the active shape.
+            Control currentCtrl;
+            currentCtrl = (Control)sender;
+
+            if (isDragging)
+            {
+                // Move the control.
+                currentCtrl.Left = e.X + currentCtrl.Left - clickOffsetX;
+                currentCtrl.Top = e.Y + currentCtrl.Top - clickOffsetY;
+            }
+            //else if (isResizing)
+            //{
+            //    // Resize the control, according to the resize mode.
+            //    if (currentCtrl.Cursor == Cursors.SizeNWSE)
+            //    {
+            //        currentCtrl.Width = e.X;
+            //        currentCtrl.Height = e.Y;
+            //    }
+            //    else if (currentCtrl.Cursor == Cursors.SizeNS)
+            //    {
+            //        currentCtrl.Height = e.Y;
+            //    }
+            //    else if (currentCtrl.Cursor == Cursors.SizeWE)
+            //    {
+            //        currentCtrl.Width = e.X;
+            //    }
+            //}
+            //else
+            //{
+            //    // Change the cursor if the mouse pointer is on one of the edges
+            //    // of the control.
+            //    if (((e.X + 5) > currentCtrl.Width) &&
+            //        ((e.Y + 5) > currentCtrl.Height))
+            //    {
+            //        currentCtrl.Cursor = Cursors.SizeNWSE;
+            //    }
+            //    else if ((e.X + 5) > currentCtrl.Width)
+            //    {
+            //        currentCtrl.Cursor = Cursors.SizeWE;
+            //    }
+            //    else if ((e.Y + 5) > currentCtrl.Height)
+            //    {
+            //        currentCtrl.Cursor = Cursors.SizeNS;
+            //    }
+            //    else
+            //    {
+            //        currentCtrl.Cursor = Cursors.Arrow;
+            //    }
+            //}
+        }
+
+        void newShape_MouseUp(object sender, MouseEventArgs e)
+        {
+            isDragging = false;
+            //isResizing = false;
+        }
+
+        void newShape_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Control currentCtrl;
+            currentCtrl = (Control)sender;
+            if (e.Button == MouseButtons.Left)
+            {
+                if (currentCtrl.Name == "Position")
+                {
+                    // Show the KHR-1HV_Position Form
+                    KHR_1HV_Position myPosition = new KHR_1HV_Position();
+                    myPosition.IniBestand = KHR1HV_Ini;
+                    myPosition.Parameter = currentMotion[currentCtrl.Tag.ToString()]["Prm"].Split(',');
+                    myPosition.ShowDialog();
+                    currentMotion[currentCtrl.Tag.ToString()]["Prm"] = string.Join(",", myPosition.Parameter);
+                    // in de delete functie worden de items allemaal teruggebracht naar een mooie rij.
+                    // zodat als er een nieuwe geplaatst wordt hier gemakkelijk in de rij toegevoegd kan worden.
+
+                }
+                else if (currentCtrl.Name == "Set")
+                {
+                    KHR_1HV_Set mySet = new KHR_1HV_Set();
+                    mySet.ShowDialog();
+                }
+                else if (currentCtrl.Name == "Mix")
+                {
+                    KHR_1HV_Mix myMix = new KHR_1HV_Mix();
+                    myMix.ShowDialog();
+                }
+                else if (currentCtrl.Name == "Compare")
+                {
+                    KHR_1HV_Compare myCompare = new KHR_1HV_Compare();
+                    myCompare.ShowDialog();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deletes the shape that is selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Shape ctrlShape = (Shape)contextMenu1.SourceControl;
+            string piet = ctrlShape.Name;
+            DataSheet.Controls.Remove(ctrlShape);
+            // Do something with the POS and Item variables.
+            // But what??????
+
+        }
     }
+}
+
+//===================================================================
+
+public class Shape : System.Windows.Forms.UserControl
+{
+    // The types of shapes supported by this control.
+    public enum ShapeType
+    {
+        PosRectangle,
+        Ellipse,
+        Triangle
+    }
+
+    private ShapeType shape = ShapeType.PosRectangle;
+    private GraphicsPath path = null;
+    private string item = string.Empty;
+
+    public ShapeType Type
+    {
+        get
+        {
+            return shape;
+        }
+        set
+        {
+            shape = value;
+            RefreshPath();
+            this.Invalidate();
+        }
+    }
+
+    /// <summary>
+    /// Set/Get the Item number of the frame
+    /// </summary>
+    public string Item
+    {
+        get
+        {
+            return item;
+        }
+        set
+        {
+            item = value;
+            RefreshPath();
+            this.Invalidate();
+        }
+    }
+
+    // Create the corresponding GraphicsPath for the shape, and apply
+    // it to the control by setting the Region property.
+    private void RefreshPath()
+    {
+        path = new GraphicsPath();
+        switch (shape)
+        {
+            case ShapeType.PosRectangle:
+                path.AddRectangle(this.ClientRectangle);
+                break;
+            case ShapeType.Ellipse:
+                path.AddEllipse(this.ClientRectangle);
+                break;
+            case ShapeType.Triangle:
+                Point pt1 = new Point(this.Width / 2, 0);
+                Point pt2 = new Point(0, this.Height);
+                Point pt3 = new Point(this.Width, this.Height);
+                path.AddPolygon(new Point[] { pt1, pt2, pt3 });
+                break;
+        }
+        this.Region = new Region(path);
+    }
+
+    protected override void OnResize(System.EventArgs e)
+    {
+        base.OnResize(e);
+        RefreshPath();
+        this.Invalidate();
+    }
+
+    protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
+    {
+        base.OnPaint(e);
+        if (path != null)
+        {
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            e.Graphics.FillPath(new SolidBrush(this.BackColor), path);
+            e.Graphics.DrawPath(new Pen(this.ForeColor, 4), path);
+        }
+    }
+
 }

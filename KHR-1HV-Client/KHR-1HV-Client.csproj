@@ -65,6 +65,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="KHR-1HV_Compare.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KHR-1HV_Compare.Designer.cs">
+      <DependentUpon>KHR-1HV_Compare.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KHR-1HV_Mix.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KHR-1HV_Mix.Designer.cs">
+      <DependentUpon>KHR-1HV_Mix.cs</DependentUpon>
+    </Compile>
     <Compile Include="KHR-1HV_MotionStopPause.cs" />
     <Compile Include="KHR-1HV_ToolMenu.cs">
       <SubType>Form</SubType>

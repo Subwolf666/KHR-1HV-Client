@@ -147,7 +147,7 @@ namespace KHR_1HV
             this.deleteToolStripMenuItem,
             this.selectAllToolStripMenuItem1});
             this.contextMenu1.Name = "contextMenuStrip1";
-            this.contextMenu1.Size = new System.Drawing.Size(165, 264);
+            this.contextMenu1.Size = new System.Drawing.Size(165, 286);
             this.contextMenu1.Click += new System.EventHandler(this.contextMenuHandler);
             // 
             // redToolStripMenuItem
@@ -227,6 +227,7 @@ namespace KHR_1HV
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // selectAllToolStripMenuItem1
             // 
@@ -417,16 +418,16 @@ namespace KHR_1HV
             // DataSheet
             // 
             this.DataSheet.BackColor = System.Drawing.Color.White;
+            this.DataSheet.ContextMenuStrip = this.contextMenu2;
             this.DataSheet.Location = new System.Drawing.Point(0, 0);
             this.DataSheet.Margin = new System.Windows.Forms.Padding(0);
             this.DataSheet.Name = "DataSheet";
             this.DataSheet.Size = new System.Drawing.Size(885, 432);
             this.DataSheet.TabIndex = 0;
             this.DataSheet.TabStop = false;
-            this.DataSheet.Click += new System.EventHandler(this.DataSheet_Click);
             this.DataSheet.DoubleClick += new System.EventHandler(this.DataSheet_DoubleClick);
+            this.DataSheet.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DataSheet_MouseDown);
             this.DataSheet.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DataSheet_MouseMove);
-            this.DataSheet.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DataSheet_MouseUp);
             // 
             // tpDataListing
             // 

@@ -44,6 +44,11 @@ namespace KHR_1HV
         public KHR_1HV_Position()
         {
             InitializeComponent();
+            //for (int index = 0; index < Roboard.StaticUtilities.numberOfServos; index++)
+            //{
+            //    // Initialize one variable
+            //    horizontalSliderArray[index] = new HorizontalSlider.SliderControl();
+            //}
         }
 
         private void KHR_1HV_Position_Load(object sender, EventArgs e)
@@ -92,9 +97,9 @@ namespace KHR_1HV
                 horizontalSliderArray[index].sliderFunction = _iniPosValues.PosChannelFunction[index];
                 horizontalSliderArray[index].sliderLabel = _iniPosValues.PosChannelName[index];
                 horizontalSliderArray[index].Visible = _iniPosValues.PosChannelVisible[index];
-                //horizontalSliderArray[index].sliderMaxRange = 400;
-                //horizontalSliderArray[index].sliderMinRange = -400;
+                horizontalSliderArray[index].sliderValue = int.Parse(saWidth[index]);
                 this.Controls.Add(horizontalSliderArray[index]);
+
                 // the event for the sliderchange
                 horizontalSliderArray[index].SliderControlChanged += new HorizontalSlider.SliderControl.SliderControlEventHandler(KHR_1HV_Position_SliderControlChanged);
                 // the Event of MouseDown
@@ -120,8 +125,8 @@ namespace KHR_1HV
             speedSlider.BackColor = ColorTranslator.FromOle(_iniPosValues.PosSpeedColor);
             speedSlider.sliderFunction = 1;
             speedSlider.sliderMinRange = 1;
-            speedSlider.sliderMaxRange = 255;
-            speedSlider.sliderValue = 100;
+            speedSlider.sliderMaxRange = 10000;
+            speedSlider.sliderValue = _speedSliderValue; 
             this.Controls.Add(speedSlider);
             speedSlider.MouseDown += new System.Windows.Forms.MouseEventHandler(sliderControl_MouseDown);
             speedSlider.MouseMove += new System.Windows.Forms.MouseEventHandler(sliderControl_MouseMove);
@@ -185,6 +190,31 @@ namespace KHR_1HV
 
         }
 
+        // Property
+        //
+        public string[] Parameter
+        {
+            get
+            {
+                string[] piet = new string[25];
+                piet[0] = speedSlider.sliderValue.ToString();
+                for (int index = 0; index < Roboard.StaticUtilities.numberOfServos; index++)
+                {
+                    piet[index + 1] = (horizontalSliderArray[index].sliderValue + 16384).ToString();
+                }
+                return piet;
+            }
+            set
+            {
+                _speedSliderValue = int.Parse(value[0]);
+                for (int index = 0; index < Roboard.StaticUtilities.numberOfServos; index++)
+                {
+                    saWidth[index] = (int.Parse(value[index + 1]) - 16384).ToString();
+                }
+            }
+        }
+
+        int _speedSliderValue = 100;
         string[] saWidth = new string[StaticUtilities.numberOfServos]
         {
             "0","0","0","0","0","0","0","0",
@@ -207,36 +237,20 @@ namespace KHR_1HV
             set { _iniPosValues = value; }
         }
 
-        //==========
-        //  METHOD
-        //==========
-        private int[] _getSliderValues = new int[24];
-        private int[] gethSliderValues()
-        {
-            // maak hier de uiteindelijke waardes
-            // 16384 etc voor servo standen, free, hoog en laag
-            for (int i = 0; i < 24; i++)
-            {
-                _getSliderValues[i] = horizontalSliderArray[i].sliderValue;
-            }
-            return _getSliderValues;
-        }
-
-        private void sethSliderValues(int[] _setSliderValues)
-        {
-            _setSliderValues = new int[24];
-            for (int i = 0; i < 24; i++)
-            {
-                horizontalSliderArray[i].sliderValue = _setSliderValues[i];
-            }
-        }
-
-        public int[] getSliderValues
-        {
-            get { return _getSliderValues; }
-
-            set { sethSliderValues(value); }//uitbreiden dat hier alle slider geset worden.
-        }
+        //============
+        //  Properties
+        //============
+        //private int[] _getSliderValues = new int[24];
+        //private int[] gethSliderValues()
+        //{
+        //    // maak hier de uiteindelijke waardes
+        //    // 16384 etc voor servo standen, free, hoog en laag
+        //    for (int i = 0; i < Roboard.StaticUtilities.numberOfServos; i++)
+        //    {
+        //        _getSliderValues[i] = horizontalSliderArray[i].sliderValue + 16384;
+        //    }
+        //    return _getSliderValues;
+        //}
 
         private void backgroundImageToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -684,7 +698,7 @@ namespace KHR_1HV
         private void KHR_1HV_Position_FormClosing(object sender, FormClosingEventArgs e)
         {
             servos.Stop();
-            _getSliderValues = gethSliderValues();
+           // _getSliderValues = gethSliderValues();
             _iniPosValues.PosWidth = this.Width;
             _iniPosValues.PosHeight = this.Height;
             _iniPosValues.PosColor = ColorTranslator.ToOle(this.BackColor);
