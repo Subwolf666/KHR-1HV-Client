@@ -599,10 +599,10 @@ namespace KHR_1HV
 
                 if (tsPos.Checked == true)
                 {
-                    newShape.Name = "Position";// misschien moet hier de itemnummer komen te staan, zodat het uniek blijft.
-                    newShape.Type = Shape.ShapeType.PosRectangle;
-                    newShape.ForeColor = Color.Coral;
-                    newShape.Tag = string.Format("Item{0}", Item);
+                    //newShape.Name = "Position";// misschien moet hier de itemnummer komen te staan, zodat het uniek blijft.
+                    newShape.Type = 0;// Shape.ShapeType.PosRectangle;
+                    newShape.ForeColor = Color.Black;
+                    newShape.Item = string.Format("Item{0}", Item);// Tag = string.Format("Item{0}", Item);
                     objectMenuSelected = true;
                     //if (firstPos)
                     {
@@ -636,22 +636,22 @@ namespace KHR_1HV
                 }
                 else if (tsSet.Checked == true)
                 {
-                    newShape.Name = "Set";
-                    newShape.Type = Shape.ShapeType.Ellipse;
+                    //newShape.Name = "Set";
+                    newShape.Type = 1;// Shape.ShapeType.Ellipse;
                     newShape.ForeColor = Color.Blue;
                     objectMenuSelected = true;
                 }
                 else if (tsMix.Checked == true)
                 {
-                    newShape.Name = "Mix";
-                    newShape.Type = Shape.ShapeType.Ellipse;
+                    //newShape.Name = "Mix";
+                    newShape.Type = 2;// Shape.ShapeType.Ellipse;
                     newShape.ForeColor = Color.Red;
                     objectMenuSelected = true;
                 }
                 else if (tsCompare.Checked == true)
                 {
-                    newShape.Name = "Compare";
-                    newShape.Type = Shape.ShapeType.Ellipse;
+                    //newShape.Name = "Compare";
+                    newShape.Type = 3;// Shape.ShapeType.Ellipse;
                     newShape.ForeColor = Color.SlateGray;
                     objectMenuSelected = true;
                 }
@@ -692,6 +692,15 @@ namespace KHR_1HV
             {
                 clickOffsetX = e.X;
                 clickOffsetY = e.Y;
+                
+                // Create and configure the flow wiring.
+                if (tsFlowWiring.CheckState == CheckState.Checked)
+                {
+                    if ((e.X < currentCtrl.Width) || (e.Y < currentCtrl.Height))
+                    {
+                        int i;
+                    }
+                }
 
                 //if ((e.X + 5) > currentCtrl.Width || (e.Y + 5) > currentCtrl.Height)
                 //{
@@ -699,7 +708,7 @@ namespace KHR_1HV
                 //    // so resizing mode is appropriate.
                 //    isResizing = true;
                 //}
-                //else
+                else
                 {
                     // The mouse is somewhere else, so dragging mode is
                     // appropriate.
@@ -769,33 +778,36 @@ namespace KHR_1HV
 
         void newShape_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Control currentCtrl;
-            currentCtrl = (Control)sender;
+            //Control currentCtrl;
+            Shape currentShape;
+            //currentCtrl = (Control)sender;
+            currentShape = (Shape)sender;
+            
             if (e.Button == MouseButtons.Left)
             {
-                if (currentCtrl.Name == "Position")
+                if (currentShape.Type == 0) // Object menu Pos
                 {
                     // Show the KHR-1HV_Position Form
                     KHR_1HV_Position myPosition = new KHR_1HV_Position();
                     myPosition.IniBestand = KHR1HV_Ini;
-                    myPosition.Parameter = currentMotion[currentCtrl.Tag.ToString()]["Prm"].Split(',');
+                    myPosition.Parameter = currentMotion[currentShape.Item.ToString()]["Prm"].Split(',');
                     myPosition.ShowDialog();
-                    currentMotion[currentCtrl.Tag.ToString()]["Prm"] = string.Join(",", myPosition.Parameter);
+                    currentMotion[currentShape.Item.ToString()]["Prm"] = string.Join(",", myPosition.Parameter);
                     // in de delete functie worden de items allemaal teruggebracht naar een mooie rij.
                     // zodat als er een nieuwe geplaatst wordt hier gemakkelijk in de rij toegevoegd kan worden.
 
                 }
-                else if (currentCtrl.Name == "Set")
+                else if (currentShape.Type == 1) // Object menu Set
                 {
                     KHR_1HV_Set mySet = new KHR_1HV_Set();
                     mySet.ShowDialog();
                 }
-                else if (currentCtrl.Name == "Mix")
+                else if (currentShape.Type == 2) // Object menu Mix
                 {
                     KHR_1HV_Mix myMix = new KHR_1HV_Mix();
                     myMix.ShowDialog();
                 }
-                else if (currentCtrl.Name == "Compare")
+                else if (currentShape.Type == 3) // Object menu Compare
                 {
                     KHR_1HV_Compare myCompare = new KHR_1HV_Compare();
                     myCompare.ShowDialog();
@@ -825,30 +837,46 @@ namespace KHR_1HV
 public class Shape : System.Windows.Forms.UserControl
 {
     // The types of shapes supported by this control.
-    public enum ShapeType
-    {
-        PosRectangle,
-        Ellipse,
-        Triangle
-    }
+    //public enum ShapeType
+    //{
+    //    PosRectangle,
+    //    Ellipse,
+    //    Triangle
+    //}
 
-    private ShapeType shape = ShapeType.PosRectangle;
+    //private ShapeType shape = ShapeType.PosRectangle;
     private GraphicsPath path = null;
+    private GraphicsPath patje = null;
     private string item = string.Empty;
+    private int type = 0;
 
-    public ShapeType Type
+    public int Type
     {
         get
         {
-            return shape;
+            return type;
         }
         set
         {
-            shape = value;
+            type = value;
             RefreshPath();
             this.Invalidate();
         }
     }
+
+    //public ShapeType Type
+    //{
+    //    get
+    //    {
+    //        return shape;
+    //    }
+    //    set
+    //    {
+    //        shape = value;
+    //        RefreshPath();
+    //        this.Invalidate();
+    //    }
+    //}
 
     /// <summary>
     /// Set/Get the Item number of the frame
@@ -872,21 +900,24 @@ public class Shape : System.Windows.Forms.UserControl
     private void RefreshPath()
     {
         path = new GraphicsPath();
-        switch (shape)
-        {
-            case ShapeType.PosRectangle:
-                path.AddRectangle(this.ClientRectangle);
-                break;
-            case ShapeType.Ellipse:
-                path.AddEllipse(this.ClientRectangle);
-                break;
-            case ShapeType.Triangle:
-                Point pt1 = new Point(this.Width / 2, 0);
-                Point pt2 = new Point(0, this.Height);
-                Point pt3 = new Point(this.Width, this.Height);
-                path.AddPolygon(new Point[] { pt1, pt2, pt3 });
-                break;
-        }
+        patje = new GraphicsPath();
+
+        //switch (shape)
+        //{
+        //    case ShapeType.PosRectangle:
+        path.AddRectangle(this.ClientRectangle);
+        patje.AddString("POS1", new FontFamily("Arial"), (int)FontStyle.Regular, 10, new Point(4, 7), StringFormat.GenericDefault);
+        //        break;
+        //    case ShapeType.Ellipse:
+        //        path.AddEllipse(this.ClientRectangle);
+        //        break;
+        //    case ShapeType.Triangle:
+        //        Point pt1 = new Point(this.Width / 2, 0);
+        //        Point pt2 = new Point(0, this.Height);
+        //        Point pt3 = new Point(this.Width, this.Height);
+        //        path.AddPolygon(new Point[] { pt1, pt2, pt3 });
+        //        break;
+        //}
         this.Region = new Region(path);
     }
 
@@ -905,6 +936,7 @@ public class Shape : System.Windows.Forms.UserControl
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             e.Graphics.FillPath(new SolidBrush(this.BackColor), path);
             e.Graphics.DrawPath(new Pen(this.ForeColor, 4), path);
+            e.Graphics.FillPath(SystemBrushes.ControlText, patje);
         }
     }
 
